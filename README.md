@@ -24,7 +24,7 @@ A French Discord bot focused on server management and community engagement, cust
 4. Create a `config.json` file in the root directory and add your Discord bot token and optional guild ID:
     ```json
     {
-        "token": "YOUR_BOT_TOKEN_HERE",
+        "discord_token": "YOUR_BOT_TOKEN_HERE",
         "guild_id": "YOUR_GUILD_ID_HERE" (optional)
     }
     ```
