@@ -270,7 +270,7 @@ class CCustomEmbed(discord.ui.LayoutView):
                     discord.ui.TextInput(
                         label="Titre du menu de sélection",
                         placeholder="Séléctionnez une option",
-                        style=discord.TextStyle.paragraph,
+                        style=discord.TextStyle.short,
                         required=True
                     )
                 ]
