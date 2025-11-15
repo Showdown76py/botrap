@@ -78,8 +78,7 @@ class CCustomEmbed(discord.ui.LayoutView):
                 discord.ui.Button(
                     style=discord.ButtonStyle.gray,
                     emoji=Emojis.add_photo,
-                    custom_id="add_photo",
-                    disabled=True
+                    custom_id="add_photo"
                 ),
                 discord.ui.Button(
                     style=discord.ButtonStyle.gray,
@@ -293,6 +292,32 @@ class CCustomEmbed(discord.ui.LayoutView):
             await cm.interaction.response.edit_message(view=CCustomEmbed(self.embed_config))
             return False
 
+        elif iid == "add_photo":
+            cm = ContentModal(
+                title="Ajouter une image",
+                elements=[
+                    discord.ui.TextInput(
+                        label="URL de l'image",
+                        placeholder="https://example.com/image.png",
+                        required=True
+                    )
+                ]
+            )
+
+            await interaction.response.send_modal(cm)
+            await cm.wait()
+
+            if not cm.interaction:
+                return
+
+            self.embed_config["components"].append({
+                "type": "image",
+                "content": f"{cm.response[0]}"
+            })
+
+            await cm.interaction.response.edit_message(view=CCustomEmbed(self.embed_config))
+            return False
+
         elif iid == "add_color":
             cm = ContentModal(
                 title="Définir la couleur de l'embed",
@@ -398,4 +423,8 @@ class CCustomEmbed(discord.ui.LayoutView):
                 custom_id=component_dict.get("custom_id", "select_menu"),
                 options=options
             ))
+        elif ctype == "image":
+            return discord.ui.MediaGallery(
+                discord.MediaGalleryItem(media=component_dict.get("content", ""))
+            )
         return None
